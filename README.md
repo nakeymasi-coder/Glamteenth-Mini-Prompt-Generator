@@ -1,1 +1,392 @@
-# Glamteenth-Mini-Prompt-Generator
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Freebie Friday Glamteenth Mini Generator</title>
+  <style>
+    :root {
+      --bg: #050505;
+      --panel: #101010;
+      --panel2: #17120a;
+      --gold: #d4af37;
+      --gold2: #f4d77b;
+      --red: #b91421;
+      --green: #0f6b3a;
+      --cream: #fff8e7;
+      --muted: #b8b0a3;
+      --line: rgba(212, 175, 55, 0.35);
+      --shadow: 0 20px 60px rgba(0,0,0,.55);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--cream);
+      background:
+        radial-gradient(circle at 15% 15%, rgba(185,20,33,.28), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(15,107,58,.22), transparent 28%),
+        radial-gradient(circle at 50% 100%, rgba(212,175,55,.18), transparent 35%),
+        var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 16px;
+    }
+
+    .app {
+      width: min(1120px, 100%);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .hero, .builder {
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg, rgba(16,16,16,.96), rgba(23,18,10,.9));
+      box-shadow: var(--shadow);
+      border-radius: 26px;
+      overflow: hidden;
+    }
+
+    .hero {
+      padding: 34px;
+      position: relative;
+      min-height: 680px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .badge {
+      display: inline-flex;
+      width: fit-content;
+      gap: 8px;
+      align-items: center;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--gold2);
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: 12px;
+      background: rgba(0,0,0,.35);
+    }
+
+    h1 {
+      margin: 22px 0 12px;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(44px, 6vw, 82px);
+      line-height: .9;
+      letter-spacing: -.04em;
+      text-transform: uppercase;
+    }
+
+    .gold { color: var(--gold2); text-shadow: 0 0 24px rgba(212,175,55,.25); }
+
+    .sub {
+      font-size: 18px;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 520px;
+    }
+
+    .poster {
+      margin-top: 30px;
+      border-radius: 24px;
+      min-height: 260px;
+      border: 1px solid rgba(244,215,123,.28);
+      background:
+        linear-gradient(rgba(0,0,0,.18), rgba(0,0,0,.62)),
+        radial-gradient(circle at 35% 25%, rgba(244,215,123,.34), transparent 28%),
+        linear-gradient(135deg, rgba(185,20,33,.75), rgba(5,5,5,.7) 45%, rgba(15,107,58,.65));
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 26px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .poster:before {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border: 1px solid rgba(244,215,123,.3);
+      border-radius: 18px;
+      pointer-events: none;
+    }
+
+    .poster-title {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 54px;
+      line-height: .86;
+      text-transform: uppercase;
+      color: var(--gold2);
+      position: relative;
+      z-index: 1;
+    }
+
+    .poster-small {
+      margin-top: 10px;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #fff;
+      position: relative;
+      z-index: 1;
+    }
+
+    .builder { padding: 26px; }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .mini-title {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -.02em;
+    }
+
+    .count {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    label {
+      display: block;
+      margin: 18px 0 8px;
+      color: var(--gold2);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    select, input, textarea {
+      width: 100%;
+      background: #080808;
+      color: var(--cream);
+      border: 1px solid rgba(212,175,55,.34);
+      border-radius: 14px;
+      padding: 14px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 190px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    .btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    button, a.button {
+      border: 0;
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-weight: 900;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+    }
+
+    .generate {
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: #111;
+    }
+
+    .copy {
+      background: rgba(255,255,255,.08);
+      color: var(--cream);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+
+    .clear {
+      background: rgba(185,20,33,.18);
+      color: #fff;
+      border: 1px solid rgba(185,20,33,.45);
+    }
+
+    .unlock {
+      margin-top: 16px;
+      width: 100%;
+      background: linear-gradient(135deg, #111, #2b2108);
+      color: var(--gold2);
+      border: 1px solid var(--gold);
+      box-shadow: 0 0 28px rgba(212,175,55,.14);
+    }
+
+    .hint {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .toast {
+      margin-top: 10px;
+      min-height: 18px;
+      color: var(--gold2);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    @media (max-width: 900px) {
+      .app { grid-template-columns: 1fr; }
+      .hero { min-height: auto; }
+      .poster-title { font-size: 42px; }
+      .btns { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="hero">
+      <div>
+        <div class="badge">Freebie Friday Mini Generator</div>
+        <h1>Glamteenth <span class="gold">Prompt</span> Drop</h1>
+        <p class="sub">Create one bold Juneteenth-inspired AI image prompt, then unlock the full Glamteenth AI Studio for the complete generator vault.</p>
+        <div class="poster" aria-label="Glamteenth preview card">
+          <div class="poster-title">Still We<br>Rise</div>
+          <div class="poster-small">Black Excellence • Legacy • Freedom</div>
+        </div>
+      </div>
+      <p class="hint">Mini version: one polished prompt. Full version: deeper controls, more categories, stronger variations, and the full vault experience.</p>
+    </section>
+
+    <section class="builder">
+      <div class="topbar">
+        <div>
+          <div class="mini-title">Build Your Free Prompt</div>
+          <div class="count">Simple, clean, and not doing too damn much.</div>
+        </div>
+      </div>
+
+      <label for="theme">Theme</label>
+      <select id="theme">
+        <option>Juneteenth Glam</option>
+        <option>Melanin Magic</option>
+        <option>Freedom Legacy</option>
+        <option>Black Excellence</option>
+        <option>Ancestor Strength</option>
+      </select>
+
+      <label for="style">Visual Style</label>
+      <select id="style">
+        <option>Luxury Editorial Poster</option>
+        <option>Bold Typography Art</option>
+        <option>Cinematic Streetwear Portrait</option>
+        <option>Glossy Cultural Celebration</option>
+        <option>Magazine Cover Inspired</option>
+      </select>
+
+      <label for="colors">Color Mood</label>
+      <select id="colors">
+        <option>red, gold, black, and heritage green</option>
+        <option>black and luxury gold with warm bronze highlights</option>
+        <option>deep red, emerald green, champagne gold, and rich brown</option>
+        <option>melanin browns, antique gold, soft cream, and bold black</option>
+      </select>
+
+      <label for="details">Optional Detail</label>
+      <input id="details" placeholder="Example: denim shorts, gold hoops, confident pose" />
+
+      <div class="btns">
+        <button class="generate" onclick="generatePrompt()">Generate My Freebie Friday Prompt</button>
+        <button class="copy" onclick="copyPrompt()">Copy Prompt</button>
+      </div>
+
+      <label for="output">Your AI Image Prompt</label>
+      <textarea id="output" placeholder="Your free prompt will appear here..."></textarea>
+
+      <div class="btns">
+        <button class="clear" onclick="clearAll()">Clear</button>
+        <button class="copy" onclick="randomize()">Randomize</button>
+      </div>
+
+      <!-- Replace # with your full Glamteenth generator link -->
+      <a class="button unlock" href="" targehttps://payhip.com/b/dMowKt="_blank" rel="noopener">Unlock the Full Glamteenth AI Studio</a>
+      <div class="hint">Password reminder for buyers: <strong>GoldenMelanin</strong></div>
+      <div class="toast" id="toast"></div>
+    </section>
+  </main>
+
+  <script>
+    const themes = ["Juneteenth Glam", "Melanin Magic", "Freedom Legacy", "Black Excellence", "Ancestor Strength"];
+    const styles = ["Luxury Editorial Poster", "Bold Typography Art", "Cinematic Streetwear Portrait", "Glossy Cultural Celebration", "Magazine Cover Inspired"];
+    const colors = [
+      "red, gold, black, and heritage green",
+      "black and luxury gold with warm bronze highlights",
+      "deep red, emerald green, champagne gold, and rich brown",
+      "melanin browns, antique gold, soft cream, and bold black"
+    ];
+
+    function val(id) { return document.getElementById(id).value; }
+
+    function generatePrompt() {
+      const detail = val('details').trim();
+      const extra = detail ? ` Include ${detail}.` : '';
+      const prompt = `Create a premium Juneteenth AI artwork in a ${val('style')} style. Theme: ${val('theme')}. Feature a confident Black woman with rich melanin skin, polished glam makeup, strong expressive pose, elegant cultural pride, and powerful freedom-day energy.${extra} Use ${val('colors')} as the main palette. Add bold clean typography inspired by legacy, liberation, celebration, and Black excellence. Keep the layout uncluttered, high-end, editorial, realistic, cinematic, glossy, sharp, and print-ready. No crowns, no tiaras, no fake tech overlays, no random floating icons, no clutter. 8K, hyper-realistic, luxury lighting, dramatic depth, clean composition.`;
+      document.getElementById('output').value = prompt;
+      toast('Prompt generated.');
+    }
+
+    async function copyPrompt() {
+      const text = val('output');
+      if (!text) { toast('Generate a prompt first.'); return; }
+      try {
+        await navigator.clipboard.writeText(text);
+        toast('Copied.');
+      } catch (e) {
+        document.getElementById('output').select();
+        document.execCommand('copy');
+        toast('Copied.');
+      }
+    }
+
+    function clearAll() {
+      document.getElementById('details').value = '';
+      document.getElementById('output').value = '';
+      toast('Cleared.');
+    }
+
+    function randomize() {
+      setRandom('theme', themes);
+      setRandom('style', styles);
+      setRandom('colors', colors);
+      generatePrompt();
+    }
+
+    function setRandom(id, arr) {
+      const el = document.getElementById(id);
+      const pick = arr[Math.floor(Math.random() * arr.length)];
+      el.value = pick;
+    }
+
+    function toast(message) {
+      document.getElementById('toast').textContent = message;
+      setTimeout(() => { document.getElementById('toast').textContent = ''; }, 2200);
+    }
+  </script>
+</body>
+</html>
